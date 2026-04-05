@@ -12,7 +12,7 @@ Target desain:
 - additive terhadap native commands,
 - aman secara state,
 - jelas secara error handling,
-- bisa dinaikkan dari assistant-driven ke parser yang lebih native.
+- deterministic dan tidak tergantung reasoning agent.
 
 ---
 
@@ -37,7 +37,8 @@ Default behavior:
 
 ### Subcommand yang disarankan
 ```text
-/openai connect
+/openai connect device-auth
+/openai connect url
 /openai paste <redirect_url>
 /openai status
 /openai use <model>
@@ -48,16 +49,16 @@ Default behavior:
 
 ## Desain Per Command
 
-## 1. `/openai connect`
+## 1. `/openai connect device-auth` dan `/openai connect url`
 ### Tujuan
 Memulai OAuth flow.
 
 ### Behavior
 - cek apakah sudah ada auth aktif
-- kalau belum, generate OAuth URL
-- simpan state `oauth_started` → `awaiting_callback_url`
+- mode `device-auth`: jalankan device login dan kirim link + one-time code
+- mode `url`: generate OAuth URL callback flow
+- simpan state sesuai mode
 - kirim instruksi singkat ke user
-- kalau callback browser localhost gagal (muter/no redirect), arahkan ke device auth fallback
 
 ### Fallback behavior (remote/headless)
 - Jalankan `codex login --device-auth`
@@ -65,6 +66,10 @@ Memulai OAuth flow.
 - Kirim one-time device code
 - Tunggu sukses login dari terminal
 - lanjutkan sinkronisasi profile auth di OpenClaw
+
+Catatan implementasi live:
+- mode `device-auth` jadi default yang direkomendasikan untuk VPS/headless
+- mode `url` dipakai saat callback browser localhost memang tersedia
 
 ### Output yang diharapkan
 - user mendapat link login
@@ -87,6 +92,10 @@ Menerima callback URL hasil login dari browser.
 - exchange auth code/token
 - jika sukses → `auth_completed`
 - jika gagal → `auth_failed`
+
+Catatan implementasi live:
+- `paste` hanya relevan untuk mode `connect url`
+- bila user sedang di mode `device-auth`, command ini harus mengembalikan instruksi bahwa paste tidak diperlukan
 
 ### Output yang diharapkan
 - sukses: auth aktif
@@ -234,22 +243,22 @@ Agar aman dengan native Telegram commands:
 
 ## Recommended Roadmap
 ### Fase 1
-- `/openai`
-- `/openai connect`
+- selesai (implemented)
+- `/openai connect device-auth`
+- `/openai connect url`
 - `/openai paste <url>`
 - `/openai status`
-- state machine dasar
-- expiry logic
+- `/openai use <model>`
+- `/openai cancel`
 
 ### Fase 2
-- `/openai use <model>`
-- lebih baik error handling
-- lebih rapi logging & masking
+- ongoing hardening
+- perbaikan edge-case handling
+- audit timeout/state cleanup
 
 ### Fase 3
-- native parser arg yang lebih matang
-- persistent session state
-- command UX polish
+- UX polish + observability
+- test harness per mode connect
 
 ---
 

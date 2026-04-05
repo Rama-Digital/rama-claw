@@ -6,7 +6,7 @@ Dokumen ini merangkum cara menambahkan flow OpenAI OAuth lewat Telegram tanpa me
 Target utamanya:
 - command bawaan tetap aman,
 - penambahan command dilakukan secara additive,
-- flow bisa dikembangkan bertahap dari assistant-driven ke handler yang lebih native.
+- flow `/openai` berjalan deterministic (native command handler), bukan reasoning agent.
 
 ---
 
@@ -25,12 +25,11 @@ Artinya:
 
 ## Ringkasan Flow
 Flow operasional sederhananya seperti ini:
-1. User mengetik `/openai`
-2. Sistem memulai flow login OAuth
-3. User membuka URL login di browser
-4. User mengirim callback URL kembali ke chat
-5. Sistem memproses callback dan menyelesaikan auth
-6. User bisa cek status auth atau memilih model yang akan dipakai
+1. User mengetik `/openai connect device-auth` atau `/openai connect url`
+2. Sistem memulai flow auth sesuai mode
+3. User menyelesaikan verifikasi
+4. User cek `/openai status`
+5. User bisa pilih model dengan `/openai use <model>`
 
 Flow fallback untuk remote/headless:
 1. Jika browser callback localhost muter terus atau gagal redirect, jangan dipaksa.
@@ -50,7 +49,7 @@ Command custom yang ditambahkan bisa berupa:
       "customCommands": [
         {
           "command": "openai",
-          "description": "OpenAI OAuth helper: connect|paste|status|use"
+          "description": "OpenAI helper: connect device-auth | connect url | status | cancel"
         }
       ]
     }
@@ -65,20 +64,17 @@ Command custom yang ditambahkan bisa berupa:
 
 ---
 
-## Current Behavior vs Target Behavior
+## Current Behavior (Live)
 
-### Current behavior
-- `/openai` sudah bisa dipakai untuk memulai flow
-- callback masih bisa diproses lewat assistant-driven flow di chat
-- belum semua subcommand dipisah menjadi parser native tersendiri
-
-### Target behavior
-- `/openai connect`
-- `/openai paste <url>`
+Per hari ini, behavior live yang sudah diterapkan:
+- `/openai connect device-auth`
+- `/openai connect url`
+- `/openai paste <url>` (khusus mode `connect url`)
 - `/openai status`
 - `/openai use <model>`
+- `/openai cancel`
 
-Dengan pola ini, flow akan lebih rapi, lebih predictable, dan lebih gampang dites.
+Semua command di atas ditangani deterministic via native command handler plugin (bypass reasoning agent).
 
 ---
 
@@ -161,7 +157,8 @@ Setelah auth selesai, urutan yang disarankan:
 Checklist minimum:
 - `/openai` muncul di custom menu
 - native commands bawaan tetap muncul
-- flow login berhasil dimulai
+- flow login mode `connect device-auth` berhasil dimulai
+- flow login mode `connect url` berhasil dimulai
 - callback valid diterima
 - callback invalid ditolak aman
 - callback expired ditolak dengan instruksi retry

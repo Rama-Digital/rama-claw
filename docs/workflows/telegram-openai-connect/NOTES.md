@@ -47,6 +47,10 @@ Flow ini dibuat untuk memindahkan bagian yang paling sering dipakai ke Telegram:
 - cek status,
 - lalu lanjut pakai model lagi.
 
+Status implementasi live:
+- command `/openai` sudah ditangani deterministic via native command handler plugin,
+- tidak lagi bergantung ke reasoning agent untuk connect/status/use/cancel.
+
 ## Kenapa tidak sekalian ganti semua command bawaan?
 Karena command bawaan OpenClaw tetap penting dan tidak boleh rusak hanya gara-gara nambah helper command baru.
 

@@ -30,16 +30,19 @@ Checklist ini dipakai untuk memastikan implementasi command helper `/openai` di 
 - [ ] Description command cukup jelas untuk user
 
 Contoh target helper:
-- `/openai connect`
+- `/openai connect device-auth`
+- `/openai connect url`
 - `/openai paste <url>`
 - `/openai status`
 - `/openai use <model>`
+- `/openai cancel`
 
 ---
 
 ## 4. Flow Checklist
 ### 4.1 Connect
-- [ ] `/openai` atau `/openai connect` memulai flow auth
+- [ ] `/openai connect device-auth` memulai device auth flow
+- [ ] `/openai connect url` memulai browser callback flow
 - [ ] OAuth URL berhasil dibuat dan dikirim ke user
 - [ ] User mendapat instruksi yang jelas untuk login via browser
 - [ ] Jika browser callback localhost gagal/muter, flow fallback ke device auth tersedia
