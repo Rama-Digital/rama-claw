@@ -39,6 +39,22 @@ Solusi yang terbukti jalan:
    `https://auth.openai.com/codex/device`
 4. Setelah sukses, OpenClaw bisa pakai kredensial OAuth yang sinkron.
 
+## Catatan lapangan tambahan: `deactivated_workspace` + session stickiness
+
+Selain blocker callback, ada pola error lain yang kejadian di real server:
+
+- Error `deactivated_workspace` muncul berulang di sesi grup/cron tertentu.
+- Root cause umumnya bukan gateway down, tapi session lama masih ke-pin ke auth profile OAuth yang sudah tidak valid.
+
+Pola pemulihan yang terbukti efektif:
+1. set urutan auth profile (`auth.order`) agar profile valid diprioritaskan,
+2. bersihkan pin `authProfileOverride` lama di session store,
+3. restart gateway dan verifikasi ulang sesi grup + cron.
+
+Catatan operasional:
+- Direct chat kadang terlihat sehat karena kebetulan sudah pindah ke profile valid,
+- sementara group/cron bisa tetap error kalau masih sticky ke profile lama.
+
 ## Tujuan flow ini
 Flow ini dibuat untuk memindahkan bagian yang paling sering dipakai ke Telegram:
 - mulai auth dari chat,
