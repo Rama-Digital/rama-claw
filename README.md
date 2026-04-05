@@ -1,40 +1,40 @@
 # Rama Claw
 
-Kumpulan petunjuk, workflow, checklist, dan catatan desain untuk kebutuhan operasional digital.
+Public documentation repo for practical operational workflows, implementation checklists, command design notes, and field context.
 
-Repo ini ditujukan sebagai tempat dokumentasi publik yang rapi, praktis, dan bisa langsung dipakai sebagai referensi kerja.
+Repositori dokumentasi publik untuk workflow operasional, checklist implementasi, catatan desain command, dan konteks lapangan.
 
-## Struktur repo
-- `docs/README.md` → peta dokumentasi
-- `docs/workflows/` → kumpulan workflow
-- setiap workflow disimpan dalam folder terpisah agar semua konteksnya utuh di satu tempat
+## Language / Bahasa
 
-## Pola dokumentasi
-Setiap workflow idealnya punya struktur seperti ini:
+- 🇮🇩 Indonesia: `docs/id/`
+- 🇬🇧 English: `docs/en/`
+
+## Repository Structure
+
+- `docs/id/` → dokumentasi Bahasa Indonesia
+- `docs/en/` → English documentation
+- `docs/workflows/` → legacy workflow path (kept for compatibility)
+
+## Recommended Workflow Pattern
 
 ```text
-docs/workflows/<workflow-name>/
+docs/<lang>/workflows/<workflow-name>/
   README.md
   CHECKLIST.md
   COMMAND-DESIGN.md
   NOTES.md
 ```
 
-## Isi saat ini
-- workflow integrasi OAuth via Telegram
-- alasan kenapa helper flow ini dibuat
-- checklist implementasi agar helper command tetap aman
-- command design untuk `/openai` dan subcommand turunannya
+## Current Workflow Content
 
-## Prinsip dokumentasi
-- fokus ke langkah yang bisa dipakai ulang
-- hindari detail internal yang sensitif
-- jaga agar contoh implementasi tetap aman untuk dipublikasikan
-- prioritaskan dokumen yang praktis, bukan teori berlebihan
-- workflow-centric: satu workflow, satu folder, semua konteksnya ada di dalam
+- Telegram OpenAI OAuth connect workflow
+- implementation safety checklist
+- `/openai` command design and behavior
+- operational notes and troubleshooting context
 
-## Rencana isi berikutnya
-- best practice operasional
-- notes troubleshooting
-- checklist deployment
-- pattern command helper lain
+## Documentation Principles
+
+- practical and reusable steps first,
+- avoid sensitive internal details,
+- keep examples safe for public sharing,
+- workflow-centric structure (one workflow, one folder, complete context).

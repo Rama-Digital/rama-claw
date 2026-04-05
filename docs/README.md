@@ -1,44 +1,25 @@
-# Documentation Map
+# Documentation Map / Peta Dokumentasi
 
-Repo ini menyimpan dokumentasi publik yang fokus ke workflow, checklist, desain implementasi, dan catatan konteks.
+Pilih bahasa dokumentasi:
+Choose documentation language:
 
-## Struktur utama
+- 🇮🇩 **Indonesia** → [`docs/id/README.md`](./id/README.md)
+- 🇬🇧 **English** → [`docs/en/README.md`](./en/README.md)
 
-### `docs/workflows/`
-Semua dokumentasi disusun **per workflow**, bukan dipisah per jenis dokumen.
+---
 
-Tujuannya:
-- satu workflow punya semua konteks di satu tempat,
-- pembaca tidak perlu loncat folder,
-- lebih scalable saat jumlah workflow bertambah.
+## Legacy Path Compatibility
 
-## Pola folder workflow
-Setiap workflow disarankan mengikuti pola:
+Folder `docs/workflows/` tetap dipertahankan untuk kompatibilitas link lama.
+`docs/workflows/` is still kept for backward compatibility with older links.
+
+Untuk dokumentasi baru, gunakan struktur berbasis bahasa:
+For new docs, use language-scoped structure:
 
 ```text
-docs/workflows/<workflow-name>/
+docs/<lang>/workflows/<workflow-name>/
   README.md
   CHECKLIST.md
   COMMAND-DESIGN.md
   NOTES.md
 ```
-
-### Penjelasan isi
-- `README.md` → alur utama workflow
-- `CHECKLIST.md` → checklist implementasi dan validasi
-- `COMMAND-DESIGN.md` → desain command / perilaku interaksi
-- `NOTES.md` → alasan, konteks, dan catatan tambahan
-
-## Workflow yang sudah ada
-### `docs/workflows/telegram-openai-connect/`
-- `README.md`
-- `CHECKLIST.md`
-- `COMMAND-DESIGN.md`
-- `NOTES.md`
-
-## Cara pakai
-1. buka folder workflow yang relevan,
-2. baca `README.md` untuk paham alur utama,
-3. pakai `CHECKLIST.md` untuk implementasi,
-4. lihat `COMMAND-DESIGN.md` untuk keputusan desain,
-5. baca `NOTES.md` untuk konteks tambahan.
