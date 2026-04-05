@@ -74,3 +74,11 @@ Saya bikin ini karena:
 > **reconnect OpenAI seharusnya tidak seribet login ke VPS setiap kali auth perlu diulang.**
 
 Kalau bisa dilakukan dari Telegram dengan aman, workflow operasional jadi jauh lebih enak.
+
+
+## Upstream Feature Request
+
+Public feature request for this workflow has been filed upstream in OpenClaw:
+- https://github.com/openclaw/openclaw/issues/61205
+
+This is useful as a reference if the workflow later becomes a native product feature instead of a local/operator workaround.
