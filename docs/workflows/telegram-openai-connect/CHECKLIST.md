@@ -42,6 +42,8 @@ Contoh target helper:
 - [ ] `/openai` atau `/openai connect` memulai flow auth
 - [ ] OAuth URL berhasil dibuat dan dikirim ke user
 - [ ] User mendapat instruksi yang jelas untuk login via browser
+- [ ] Jika browser callback localhost gagal/muter, flow fallback ke device auth tersedia
+- [ ] Instruksi fallback mengarah ke `codex login --device-auth` + halaman verifikasi device code
 
 ### 4.2 Callback
 - [ ] Callback URL valid bisa diterima
@@ -82,6 +84,9 @@ Contoh target helper:
 - [ ] OAuth provider gagal → flow masuk `auth_failed`
 - [ ] User batalkan flow → state masuk `cancelled`
 - [ ] Restart di tengah flow → state tetap konsisten atau invalidasi aman
+- [ ] Kasus `Enable device code authorization for Codex` belum aktif ditangani dengan instruksi yang benar
+- [ ] User diarahkan ke ChatGPT Security Settings untuk mengaktifkan device code authorization
+- [ ] Setelah user enable, flow meminta rerun `codex login --device-auth`
 
 ---
 
@@ -101,6 +106,7 @@ Contoh target helper:
 - [ ] `/openai use <model>` jalan setelah auth aktif
 - [ ] Callback valid sukses diproses
 - [ ] Callback invalid gagal aman
+- [ ] Device auth sukses saat browser OAuth callback tidak usable di remote/headless
 
 ### Regression
 - [ ] Native command Telegram tetap ada

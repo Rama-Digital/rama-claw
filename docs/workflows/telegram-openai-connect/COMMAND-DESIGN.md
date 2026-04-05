@@ -57,6 +57,14 @@ Memulai OAuth flow.
 - kalau belum, generate OAuth URL
 - simpan state `oauth_started` → `awaiting_callback_url`
 - kirim instruksi singkat ke user
+- kalau callback browser localhost gagal (muter/no redirect), arahkan ke device auth fallback
+
+### Fallback behavior (remote/headless)
+- Jalankan `codex login --device-auth`
+- Kirim user ke `https://auth.openai.com/codex/device`
+- Kirim one-time device code
+- Tunggu sukses login dari terminal
+- lanjutkan sinkronisasi profile auth di OpenClaw
 
 ### Output yang diharapkan
 - user mendapat link login
@@ -186,6 +194,18 @@ Command harus menangani error berikut:
 - duplicate connect while flow still pending,
 - model invalid,
 - user cancel mid-flow.
+- device code authorization belum aktif di akun ChatGPT.
+
+### Known blocker: Device code authorization belum aktif
+Gejala:
+- user klik Continue di browser flow, tapi redirect callback localhost tidak jalan.
+
+Penanganan:
+1. Minta user klik link merah: `Enable device code authorization for Codex`.
+2. User diarahkan ke ChatGPT Security Settings.
+3. User aktifkan opsi: `Enable device code authorization for Codex`.
+4. Jalankan ulang `codex login --device-auth`.
+5. Ulangi verifikasi di halaman device code.
 
 ### Prinsip error message
 - singkat,

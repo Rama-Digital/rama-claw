@@ -24,6 +24,21 @@ Sebelum ada flow ini, reconnect OpenAI biasanya butuh langkah seperti:
 
 Untuk sesekali mungkin masih oke. Tapi kalau ini kejadian berulang, prosesnya boros waktu dan bikin operasional tidak enak.
 
+## Catatan lapangan terbaru (important)
+Dalam implementasi real di VPS, ada blocker yang muncul:
+- Browser OAuth bisa muter terus setelah klik Continue.
+- Callback `localhost:1455` kadang tidak pernah kebuka usable di browser user.
+
+Solusi yang terbukti jalan:
+1. Aktifkan dulu opsi akun ChatGPT:
+   `Enable device code authorization for Codex`
+   (melalui ChatGPT Security Settings).
+2. Jalankan:
+   `codex login --device-auth`
+3. User verifikasi di:
+   `https://auth.openai.com/codex/device`
+4. Setelah sukses, OpenClaw bisa pakai kredensial OAuth yang sinkron.
+
 ## Tujuan flow ini
 Flow ini dibuat untuk memindahkan bagian yang paling sering dipakai ke Telegram:
 - mulai auth dari chat,

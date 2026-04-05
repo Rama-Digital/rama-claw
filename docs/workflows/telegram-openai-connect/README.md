@@ -32,6 +32,12 @@ Flow operasional sederhananya seperti ini:
 5. Sistem memproses callback dan menyelesaikan auth
 6. User bisa cek status auth atau memilih model yang akan dipakai
 
+Flow fallback untuk remote/headless:
+1. Jika browser callback localhost muter terus atau gagal redirect, jangan dipaksa.
+2. Pindah ke device auth: jalankan `codex login --device-auth`.
+3. User buka `https://auth.openai.com/codex/device` dan masukkan one-time code.
+4. Setelah sukses, OpenClaw bisa sync profile OAuth dari Codex CLI.
+
 ---
 
 ## Contoh Command Tambahan
@@ -113,6 +119,21 @@ Minimal case berikut perlu diproses dengan aman:
 - auth provider gagal,
 - user sudah punya auth aktif sebelumnya,
 - restart terjadi di tengah flow.
+- **device code authorization belum di-enable** di ChatGPT Security Settings.
+
+### Blocker yang sering muncul di lapangan
+Kasus real yang harus didukung:
+- user klik Continue di browser flow, tapi halaman hanya muter dan tidak redirect callback.
+- ini umum di remote/VPS/headless atau network policy yang memblok localhost callback.
+
+Fix yang dipakai:
+1. Buka link merah pada halaman OpenAI: `Enable device code authorization for Codex`.
+2. User akan diarahkan ke ChatGPT Security Settings.
+3. Di bagian paling bawah, aktifkan opsi:
+   `Enable device code authorization for Codex`.
+4. Jalankan ulang command:
+   `codex login --device-auth`
+5. Selesaikan login via `https://auth.openai.com/codex/device` + one-time code.
 
 ---
 
@@ -144,6 +165,8 @@ Checklist minimum:
 - callback valid diterima
 - callback invalid ditolak aman
 - callback expired ditolak dengan instruksi retry
+- device auth path berhasil saat browser callback gagal
+- case "device code authorization belum enabled" punya instruksi fix yang jelas
 - cancel flow tidak merusak state
 - restart tidak menghapus native commands
 - status auth bisa dicek
