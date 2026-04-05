@@ -6,10 +6,19 @@ Repo ini ditujukan sebagai tempat dokumentasi publik yang rapi, praktis, dan bis
 
 ## Struktur repo
 - `docs/README.md` → peta dokumentasi
-- `docs/workflows/` → alur kerja end-to-end
-- `docs/checklists/` → checklist implementasi dan validasi
-- `docs/design/` → catatan desain command / arsitektur kecil
-- `docs/notes/` → konteks dan alasan pembuatan workflow
+- `docs/workflows/` → kumpulan workflow
+- setiap workflow disimpan dalam folder terpisah agar semua konteksnya utuh di satu tempat
+
+## Pola dokumentasi
+Setiap workflow idealnya punya struktur seperti ini:
+
+```text
+docs/workflows/<workflow-name>/
+  README.md
+  CHECKLIST.md
+  COMMAND-DESIGN.md
+  NOTES.md
+```
 
 ## Isi saat ini
 - workflow integrasi OAuth via Telegram
@@ -22,6 +31,7 @@ Repo ini ditujukan sebagai tempat dokumentasi publik yang rapi, praktis, dan bis
 - hindari detail internal yang sensitif
 - jaga agar contoh implementasi tetap aman untuk dipublikasikan
 - prioritaskan dokumen yang praktis, bukan teori berlebihan
+- workflow-centric: satu workflow, satu folder, semua konteksnya ada di dalam
 
 ## Rencana isi berikutnya
 - best practice operasional
